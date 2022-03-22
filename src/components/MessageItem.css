@@ -1,0 +1,11 @@
+.messageLine {
+  margin-bottom: 10px;
+  display: flex;
+
+}
+
+.messageItem {
+  margin-bottom: 10px;
+  display: flex;
+  
+}
