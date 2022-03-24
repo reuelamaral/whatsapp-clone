@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import EmojiPicker from 'emoji-picker-react';
 import './ChatWindow.css';
 
@@ -12,7 +12,9 @@ import CloseIcon from '@material-ui/icons/Close';
 import SendIcon from '@material-ui/icons/Send';
 import MicIcon from '@material-ui/icons/Mic';
 
-export default () => {
+export default ({user}) => {
+
+  const body = useRef();
 
   let recognition = null;
   let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -23,7 +25,35 @@ export default () => {
   const [emojiOpen, setEmojiOpen] = useState(false);
   const [text, setText] = useState('');
   const [listening, setListening] = useState(false);
-  const [list, setList] = useState([{}, {}, {}]);
+  const [list, setList] = useState([
+    {author:123, body:'asgsagfdgasddgaag'}, 
+    {author:1234, body:'asgsaasas sadasdasdasdasd sad asgasdasdad  asdasdasdfdgdgaag'}, 
+    {author:123, body:'asgsaasd asdsadgf sadasd dgdgaag'},
+    {author:123, body:'asgsagfdgasddgaag'}, 
+    {author:1234, body:'asgsaasas sadasdasdasdasd sad asgasdasdad  asdasdasdfdgdgaag'}, 
+    {author:123, body:'asgsaasd asdsadgf sadasd dgdgaag'},
+    {author:123, body:'asgsagfdgasddgaag'}, 
+    {author:1234, body:'asgsaasas sadasdasdasdasd sad asgasdasdad  asdasdasdfdgdgaag'}, 
+    {author:123, body:'asgsaasd asdsadgf sadasd dgdgaag'},
+    {author:123, body:'asgsagfdgasddgaag'}, 
+    {author:1234, body:'asgsaasas sadasdasdasdasd sad asgasdasdad  asdasdasdfdgdgaag'}, 
+    {author:123, body:'asgsaasd asdsadgf sadasd dgdgaag'},
+    {author:123, body:'asgsagfdgasddgaag'}, 
+    {author:1234, body:'asgsaasas sadasdasdasdasd sad asgasdasdad  asdasdasdfdgdgaag'}, 
+    {author:123, body:'asgsaasd asdsadgf sadasd dgdgaag'},
+    {author:123, body:'asgsagfdgasddgaag'}, 
+    {author:1234, body:'asgsaasas sadasdasdasdasd sad asgasdasdad  asdasdasdfdgdgaag'}, 
+    {author:123, body:'asgsaasd asdsadgf sadasd dgdgaag'},
+    {author:123, body:'asgsagfdgasddgaag'}, 
+    {author:1234, body:'asgsaasas sadasdasdasdasd sad asgasdasdad  asdasdasdfdgdgaag'}, 
+    {author:123, body:'asgsaasd asdsadgf sadasd dgdgaag'},  
+  ]);
+
+  useEffect(() => {
+    if(body.current.scrollHeight > body.current.offsetHeight) {
+      body.current.scrollTop = body.current.scrollHeight - body.current.offsetHeight
+    }
+  }, [list]);
 
   const handleEmojiClick = (e, emojiObject) => {
     setText( text + emojiObject.emoji );
@@ -86,11 +116,12 @@ export default () => {
         </div>
 
       </div>
-      <div className="chatWindow--body">
+      <div ref={body} className="chatWindow--body">
         {list.map((item, key)=>(
           <MessageItem 
             key={key}
             data={item}
+            user={user}
           />
         ))}
       </div>

@@ -58,6 +58,17 @@
   background-size: cover;
   background-position: center;
   background-image: url('https://i.pinimg.com/originals/cf/14/0d/cf140dac517f37fc801b6b91aaf76fea.png');
+  padding: 20px 30px;
+
+}
+
+.chatWindow--body::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.chatWindow--body::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .chatWindow--footer {
@@ -106,3 +117,4 @@ aside.emoji-picker-react {
 .emoji-picker-react .emoji-group:before {
   background: none;
 }
+

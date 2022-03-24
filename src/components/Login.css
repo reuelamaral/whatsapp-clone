@@ -1,0 +1,16 @@
+.login {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login button {
+  color: blue;
+  background-color: #FFF;
+  border-radius: 15px;
+  width: 200px;
+  height: 50px;
+  cursor: pointer;
+
+}
