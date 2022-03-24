@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import './App.css';
 
+import Api from './Api.js'
+
 import ChatListItem from './components/ChatListItem';
 import ChatIntro from './components/ChatIntro';
 import ChatWindow from './components/ChatWindow';
@@ -14,18 +16,20 @@ import SearchIcon from '@material-ui/icons/Search';
 
 export default() => {
 
-  const [chatlist, setChatList] = useState([
-    {chatId: 1, title: 'Fulano de Tal', image:'https://leadsdeconsorcio.com.br/blog/wp-content/uploads/2019/11/04-1.jpg'},
-    {chatId: 2, title: 'Fulano de Tal', image:'https://leadsdeconsorcio.com.br/blog/wp-content/uploads/2019/11/04-1.jpg'},
-    {chatId: 3, title: 'Fulano de Tal', image:'https://leadsdeconsorcio.com.br/blog/wp-content/uploads/2019/11/04-1.jpg'},
-    {chatId: 4, title: 'Fulano de Tal', image:'https://leadsdeconsorcio.com.br/blog/wp-content/uploads/2019/11/04-1.jpg'},
-  ]);
+  const [chatlist, setChatList] = useState([]);
 
   const [activeChat, setActiveChat] = useState({});
 
   const [user, setUser] = useState(null);
 
   const [showNewChat, setShowNewChat] = useState(false);
+
+  useEffect(() =>{
+    if(user !== null) {
+      let unsub = Api.onChatList(user.id, setChatList);
+      return unsub;
+    }
+  }, [user]);
 
   const handleNewChat = () => {
     setShowNewChat(true);
@@ -37,8 +41,9 @@ export default() => {
       name: u.displayName,
       avatar: u.photoURL
     };
+    await Api.addUser(newUser);
     setUser(newUser);
-  };
+  }
 
   if(user === null ) {
     return (<Login onReceive={handleLoginData}/>);
@@ -55,7 +60,9 @@ export default() => {
         />
         <header>
           <img className="header--avatar" src={user.avatar}></img>
+          <p className="header--name">{user.name}</p>
           <div className="header--buttons">
+            
             <div className="header--btn">
               <DonutLargeIcon style={{color:'#919191'}} />
             </div>
@@ -90,6 +97,7 @@ export default() => {
         {activeChat.chatId !== undefined && 
         <ChatWindow 
           user={user}
+          data={activeChat}
         />
 
         }
